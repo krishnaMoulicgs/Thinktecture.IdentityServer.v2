@@ -24,6 +24,8 @@ namespace Thinktecture.IdentityServer.Repositories
         public virtual bool ValidateUser(string userName, string password)
         {
             return Membership.ValidateUser(userName, password);
+          
+
         }
 
         public virtual bool ValidateUser(X509Certificate2 clientCertificate, out string userName)

@@ -1,0 +1,244 @@
+﻿@using Thinktecture.IdentityServer.Web.App_LocalResources.Account
+@using System.Data;
+@using Thinktecture.IdentityServer.Web.ViewModels;
+@model AssignUserRolesModel
+@{
+    ViewBag.Title = "RoleAdmin_AssignUserRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>AssignUserRoles</h4>
+
+<br />
+
+<div style="width: 100%">
+    <div>
+        <div class="divLeft" style="min-height: 50px;">
+
+            <b>
+                Application :  @Html.DisplayFor(m => m.Application)
+                <br />
+                User Role :  @Html.DisplayFor(m => m.UserRole)
+                <br />
+                Time      :  @Html.DisplayFor(m => m.Time)  </b>
+        </div>
+        <div class="divRight">           
+        </div>`
+        <div style="clear:both;"></div>
+    </div>
+    <div>
+                <div class="divLeft" style="min-height: 50px;">
+            @using (Ajax.BeginForm("CurrentUserRoles", "Account", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
+            }))
+            {                
+                @Html.DropDownListFor(i => i.ValueField, new SelectList(Model.BindList, "ValueField", "TextField"), new { id = "ddlUsers", @size = 2, @Style = "Width:300px;min-height:300px;", onchange = "$(this.form).submit();" }) 
+            }
+
+        </div>
+        <div class="divRight">           
+            <fieldset id="fieldView" style="border: 0;">
+                @{
+                    if (Model.RolesinUserTable != null && Model.RolesinUserTable.Count > 0)
+                    {
+                  
+                    <table id="tbl" cellpadding="2px" style="border-collapse: collapse; width: 500px">
+                       <tr>
+                           <td>User : @Session["SelectedUserName"]</td>
+                           <td colspan="2">
+
+                           </td>
+
+                       </tr>  
+                       <tr>
+                            <td>Roles :</td>
+                            <td colspan="2">
+
+                           </td>
+                        </tr>                      
+                       <tr>
+                             <td>
+                                  <table id="tblRoles" cellpadding="2px" rules="all" border="1" style="border-collapse: collapse; width: 200px">
+                                      <tr>
+                                       <th>Available</th>
+                                      </tr> 
+                                      <td>
+                                       @for (int i = 0; i < Model.RolesinUserTable.Count; i++)
+                                          {
+                                           @Html.ListBoxFor(
+                                                                    model => model.SelectedRoles,
+                                                                    new MultiSelectList(
+                                                                        (@Model.RolesinUserTable[i].Roles),
+                                                                        "RoleId",
+                                                                          "Rolename",
+                                                                        @Model.SelectedRoles
+                                                                    ), new { @id="appRoles", @Style = "width:100%;min-height:50px;" }
+                                                                )
+                                          }
+                                     </td>                                    
+                                  </table>
+                             </td>
+                              <td>
+                                  <input id="btnAssign" type="button" value=">>" />
+                                  <br /> <br />
+                                  <input id="btnRemove" type="button" value="<<" />
+                              </td>  
+                             <td>                                  
+                                  <table id="tblSelectedRoles" cellpadding="2px" rules="all" border="1" style="border-collapse: collapse; width: 200px">
+                                      <tr>
+                                       <th>Selected</th>
+                                      </tr> 
+                                      <td>
+                                     @for (int i = 0; i < Model.UserRolesTable.Count; i++)
+                                          {
+                                             @Html.ListBoxFor(
+                                                                    model => model.SelectedRoles,
+                                                                    new MultiSelectList(
+                                                                        (@Model.UserRolesTable[i].Roles),
+                                                                        "RoleId",
+                                                                          "Rolename",
+                                                                        @Model.SelectedRoles
+                                                                    ), new { @id="currentRoles", @Style = "width:100%;min-height:50px;" }
+                                                                )
+                                          }
+                                     </td>
+                                  </table>                            
+                             </td>                    
+
+                        </tr>
+                        <tr>
+                            <td>
+                                 <input type="button" id="btnSaveRoles" value="UpdateRoles" class="bluebutton" />   
+                                 <input type="button" id="btnSendmail" value="Mail To User" class="bluebutton" />                              
+                            </td>
+                        </tr>
+                    </table>
+                        <div id="Result" class="divResult">
+                                
+                         </div>
+                    }
+                                      
+                }
+            </fieldset>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+</div>
+
+<style type="text/css">
+    #tblUserRoles th, #tblEditUserRoles th
+    {
+        font-family: Arial, Helvetica, sans-serif, Verdana;
+        font-size: 10pt;
+        text-align: center;
+    }
+
+    #tblUserRoles tr td, #tblEditUserRoles tr td
+    {
+        padding-left: 5px;
+    }
+
+    .divLeft
+    {
+        float: left;
+        width: 25%;
+        padding: 2px;      
+    }
+
+    .divRight
+    {
+        width: 75%;
+        min-height: 50px;
+        padding: 2px;
+        overflow: auto;       
+    }
+
+    .bluebutton
+    {
+        background: #293955;
+        border: none;
+        color: #BFDBFF;
+        display: inline-block;
+        font-weight: bold;       
+        min-width: 40px;       
+        text-decoration: none;
+        text-align: center;
+        width: 110px;
+        border-radius: 7px;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#btnRemove').click(function () {
+           
+           $('#currentRoles option:selected').remove();
+        });
+
+        $('#btnAssign').click(function () {           
+            $("#appRoles option:selected").each(function () {
+                var optionVal = $(this).val();
+                var exists = false;
+                $('#currentRoles option').each(function(){
+                    if (this.value == optionVal) {
+                        exists = true;
+                    }
+                });
+                if(!exists) {
+                    $('#currentRoles').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                }
+            });
+        });
+    });
+
+    $('#btnSaveRoles').click(function () {
+        $('#Result').text("");
+        var optionVal = [];       
+        $('#currentRoles option').each(function () {           
+            optionVal.push($(this).val());           
+        });
+        var selectedroles = optionVal.join( ',' ) ;
+        var dataResponse = { roles: selectedroles };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(dataResponse),
+            dataType: 'json',
+            url: '@Url.Action("UpdateUserRoles")',
+            success:successResult
+               
+         });
+    });
+    function successResult() {
+        $('#Result').text("Roles Updated Successfully");
+    }
+
+    function failure() {
+        alert('failure');
+    }
+    $('#btnSendmail').click(function () {
+        var uName = '@Model.Users[0].UserName.ToString()';
+        var email = 'krishna.medida@gmail.com';
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "@Url.Content("~")Account/NotificationEmail",
+                    data: JSON.stringify({ "uName": uName, "email": email }),
+                    dataType: "json",
+                    beforeSend: function () { },
+                    success: function (data) {
+                        $("#Result").text("");
+                        $('#imgloader').css("display", "none");
+                        $("#Result").text(data);
+                    },
+                    error: function (msg, status) {
+                        $("#Result").text("Invalid Email id");
+                    }
+         });
+    });
+</script>

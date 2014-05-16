@@ -11,7 +11,8 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h2>@string.Format(SignIn_cshtml.UnauthorizedAuthenticatedUser, User.Identity.Name)</h2>
+    <h4>@string.Format(SignIn_cshtml.UnauthorizedAuthenticatedUser, User.Identity.Name)</h4>
+  
 }
 
 @using (Html.BeginForm())
@@ -24,6 +25,7 @@
             @Html.LabelFor(m => m.UserName)
             @Html.TextBoxFor(m => m.UserName)
             @Html.ValidationMessageFor(m => m.UserName)
+            @Html.Label("CGS")
         </div>
                 
         <div>

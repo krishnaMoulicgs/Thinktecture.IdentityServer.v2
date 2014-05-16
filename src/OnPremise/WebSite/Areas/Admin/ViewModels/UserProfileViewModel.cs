@@ -139,4 +139,12 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
         public string Name { get; set; }
         public string Value { get; set; }
     }
+//    public class saveprofile()
+//{
+//    Profile.UserInfo = new UserInfo(txtusername.Text, txtdateofbirth.Text, txtplace.Text,
+//                                        txtlivesin.Text, txtlanguages.Text, txtaboutme.Text,
+//                                        txtemployer.Text,txtproject.Text, 
+//                txtdesignation.Text, txtcollege.Text);
+//    Profile.Save();
+//}
 }

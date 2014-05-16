@@ -1,0 +1,234 @@
+﻿@using Thinktecture.IdentityServer.Web.App_LocalResources.Account
+@model Thinktecture.IdentityServer.Web.ViewModels.Registration
+
+@{
+    ViewBag.Title = Registration_cshtml.Registration;
+   
+    ViewBag.HideMenu = true;
+    
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="divContent">
+    <div class="divContent left">&nbsp;</div>
+    <div class="divContent middle">
+         @Html.ValidationSummary(true, Registration_cshtml.RegistrationUnsuccessful)   
+
+        <fieldset class="editor small signin">
+        <legend>Registration</legend>
+        <div class="divlogo">
+           <img src="~/Content/images/OSCid.png" />
+        </div>
+            <table>
+                <tr>
+                    <td> @Html.LabelFor(m=>m.FirstName)</td>
+                    <td> @Html.TextBoxFor(m=>m.FirstName)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m=>m.LastName)</td>
+                    <td>@Html.TextBoxFor(m=>m.LastName)</td>
+                </tr>
+                 <tr>
+                    <td> @Html.LabelFor(m=>m.Company)</td>
+                    <td> @Html.TextBoxFor(m=>m.Company)</td>
+                </tr>
+                <tr>
+                    <td> @Html.LabelFor(m=>m.EmailId)</td>
+                    <td> @Html.TextBoxFor(m=>m.EmailId)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><div id="lblemail" class="divResult"></div></td>
+                </tr>
+                 <tr>
+                    <td>@Html.LabelFor(m=>m.UserName)</td>
+                    <td>@Html.TextBoxFor(m=>m.UserName)</td>
+                </tr> 
+                 <tr>
+                    <td></td>
+                    <td><div id="lbluname" class="divResult"></div></td>
+                </tr>   
+                 <tr>
+                    <td>@Html.LabelFor(m=>m.Password)</td>
+                    <td>@Html.PasswordFor(m=>m.Password)</td>
+                </tr> 
+                 <tr>
+                    <td></td>
+                    <td><div id="lblpwd" class="divResult"></div></td>
+                </tr> 
+                <tr>
+                    <td>@Html.LabelFor(m=>m.ConfirmPassword)</td>
+                    <td>@Html.PasswordFor(m=>m.ConfirmPassword)</td>
+                </tr> 
+                 <tr>
+                    <td></td>
+                    <td><div id="lblcnfpwd" class="divResult"></div></td>
+                </tr>          
+                 <tr>
+                    <td>@Html.LabelFor(m=>m.ContactMailId)</td>
+                    <td>@Html.TextBoxFor(m=>m.ContactMailId)</td>
+                </tr> 
+                 <tr>
+                    <td></td>
+                    <td><div id="lblcntMail" class="divResult"></div></td>
+                </tr>  
+                 <tr>
+                    <td>@Html.LabelFor(m=>m.Application)</td>
+                    <td>@Html.TextBoxFor(m=>m.Application)</td>
+                </tr> 
+                 <tr>
+                    <td></td>
+                    <td><div id="lblApp" class="divResult"></div></td>
+                </tr>  
+                <tr>
+                    <td></td>
+                    <td class="buttons">
+                         @* <input type="button" class="cssbutton" value="@Registration_cshtml.Submit" onclick="register();" />&nbsp;&nbsp;&nbsp;
+                          <input type="submit" class="cssbutton" value="@Registration_cshtml.Clear" />&nbsp;&nbsp;&nbsp;*@
+                        <div style="float:left">
+                             <a id="linkSubmit" onclick="register();" class="cssbutton" >Submit</a>     
+                             @Html.ActionLink("Clear", "Registration", "account", new{area=""}, new {@class="cssbutton"})
+                             @Html.ActionLink("Home", "index", "home", new{area=""}, new {@class="cssbutton"})  
+                            </div>
+                        <div>
+                       <img id="imgloader" src="~/Content/images/ajax-loader1.gif" class="cssimg" style="display:none;" />
+                            </div>
+                    </td>
+                  
+                </tr>
+                <tr>
+                    <td colspan="2"><div id="Result" class="divResult"></div></td>
+                </tr>
+            </table>        
+    </fieldset>
+   </div>
+     <div class="divContent right">&nbsp;</div>
+    </div>
+}
+@section scripts
+{
+<script type="text/javascript">  
+
+    function register() {
+        $("#lbluname").text("");
+        $("#lblpwd").text("");
+        $("#lblcnfpwd").text("");
+        $("#lblemail").text("");
+        $("#lblcntMail").text("");
+        $("#lblApp").text("");
+
+        var userName = $('#UserName').val();
+        var password = $('#Password').val();
+        var cnfpwd = $('#ConfirmPassword').val();
+        var emailId = $('#EmailId').val();
+        var firstName = $('#FirstName').val();
+        var lastName = $('#LastName').val();
+        var company = $('#Company').val();
+        var cntEmail = $("#ContactMailId").val();
+        var app = $("#Application").val();
+
+        var flag = true;
+
+        if (emailId == '') {
+            flag = false;
+            $("#lblemail").text("email Field is required.");
+        }
+        if (flag && !validateEmail(emailId)) {
+            flag = false;
+            $("#lblemail").text("Please enter a valid email address.");
+        }
+        if (userName == '') {
+            flag = false;
+            $("#lbluname").text("User Name Field is required.");
+        }
+        if (password == '') {
+            flag = false;
+            $("#lblpwd").text("Password Field is required.");
+        }
+        if (flag && !CheckLength(password)) {
+            flag = false;
+            $("#lblpwd").text("Password requires minimum 6 characters.");
+        }
+        if (cnfpwd == '') {
+            flag = false;
+            $("#lblcnfpwd").text("Confirm Password Field is required.");
+        }
+
+        if (flag && password != cnfpwd) {
+            flag = false;
+            $("#lblcnfpwd").text("Confirm Password is not matched.");
+        }
+        if (cntEmail == '') {
+            flag = false;
+            $("#lblcntMail").text("email Field is required.");
+        }
+        if (flag && !validateEmail(cntEmail)) {
+            flag = false;
+            $("#lblcntMail").text("Please enter a valid email address.");
+        }
+        if (app == '') {
+            flag = false;
+            $("#lblApp").text("Application Field is required.");
+        }
+
+        if (flag) {
+            $('#imgloader').css("display", "block");
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "@Url.Content("~")Account/Register",
+                data: JSON.stringify({ "userName": userName, "password": password, "company": company, "emailId": emailId, "firstName": firstName, "lastName": lastName, "contactMail": cntEmail, "app": app }),
+                dataType: "json",
+                beforeSend: function () { },
+                success: function (data) {
+                    $('#FirstName').val("");
+                    $('#LastName').val("");
+                    $('#EmailId').val("");
+                    $('#UserName').val("");
+                    $('#Password').val("");
+                    $('#ConfirmPassword').val("");
+                    $('#Company').val("");
+                    $('#ContactMailId').val("");
+                    $('#Application').val("");
+                    $('#imgloader').css("display", "none");
+                    $("#Result").text("");
+                    $("#Result").text(data);
+                },
+                error: function (msg, status) {
+                    // alert(msg.status);
+                }
+            });
+        }
+        else {
+            $('#Password').val("");
+            $('#ConfirmPassword').val("");
+        }
+    }
+</script>
+    <script type="text/javascript">
+        function validate() {
+           
+            return flag;
+        }
+        function validateEmail(sEmail) {
+            var filter = /^([\w-\.]+)\@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (filter.test(sEmail)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckLength(password) {
+            if (password.length < 6)
+                return false;
+            else
+                return true; 
+        }
+    </script>
+}

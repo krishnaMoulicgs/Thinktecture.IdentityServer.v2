@@ -59,7 +59,7 @@ namespace Thinktecture.IdentityServer.Protocols
 
             return RedirectToAction("Index", "Home");
         }
-
+       
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

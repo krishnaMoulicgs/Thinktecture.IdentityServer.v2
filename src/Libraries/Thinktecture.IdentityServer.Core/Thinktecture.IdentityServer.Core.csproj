@@ -320,6 +320,7 @@
     <EmbeddedResource Include="Resources\Models\ClientCertificate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientCertificate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Models\CodeToken.fr.resx">
       <DependentUpon>CodeToken.resx</DependentUpon>

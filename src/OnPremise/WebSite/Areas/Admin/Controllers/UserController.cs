@@ -148,7 +148,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
             var vm = new UserProfileViewModel(username);
             return View(vm);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public new ActionResult Profile(string username, ProfilePropertyInputModel[] profileValues)
@@ -192,7 +192,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Error updating password");
                 }
             }
-            
+
             return View("ChangePassword", model);
         }
     }

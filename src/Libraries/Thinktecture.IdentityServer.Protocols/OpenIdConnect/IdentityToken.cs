@@ -16,7 +16,7 @@ namespace Thinktecture.IdentityServer.Protocols.OpenIdConnect
                 throw new InvalidOperationException("Subject is empty");
             }
 
-            var claims = base.CreateClaims();
+            var claims = base.CreateClaims();           
             claims.Add(new Claim(OidcConstants.ClaimTypes.Subject, Subject));
             claims.Add(new Claim("iat", DateTime.UtcNow.ToEpochTime().ToString()));
             

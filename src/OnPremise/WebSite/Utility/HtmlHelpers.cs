@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Thinktecture.IdentityServer.Web.Utility
 {
@@ -52,5 +53,10 @@ namespace Thinktecture.IdentityServer.Web.Utility
 
             return MvcHtmlString.Empty;
         }
+        //public static string ToJson(this Object obj)
+        //{
+        //    string model = new JavaScriptSerializer().Serialize(obj);
+        //    return model;
+        //} 
     }
 }

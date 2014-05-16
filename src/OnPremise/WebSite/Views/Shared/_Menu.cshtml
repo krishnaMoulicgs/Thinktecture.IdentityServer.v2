@@ -4,8 +4,16 @@
     {
         @Html.ActionLink(_Menu_cshtml.Administration, "index", "home", new{area="Admin"}, null)
         @: &nbsp;
+        @Html.ActionLink(_Menu_cshtml.UserApproval, "UserApproval", "Account", new{area=""}, null)
+          @: &nbsp;
+        @Html.ActionLink("Assign User Roles", "AssignUserRoles", "Account", new{area=""}, null)
     }
-        
+      @if (ViewBag.IsRoleAdmin)
+      {
+           @Html.ActionLink(_Menu_cshtml.UserApproval, "UserApproval", "Account", new{area=""}, null)
+           @: &nbsp;
+           @Html.ActionLink("Assign User Roles", "RoleAdmin_AssignUserRoles", "Account", new{area=""}, null)
+      }    
     @if (ViewBag.IsSignedIn)
     {
         @Html.ActionLink(_Menu_cshtml.Home, "index", "home", new{area=""}, null)
@@ -19,5 +27,7 @@
         @Html.ActionLink(_Menu_cshtml.Home, "index", "home", new{area=""}, null)
         @: &nbsp;
         @Html.ActionLink(_Menu_cshtml.SignIn, "signin", "account", new{area=""}, null)
+        
     }
+   
 </div>

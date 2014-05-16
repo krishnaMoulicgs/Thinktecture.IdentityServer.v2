@@ -23,6 +23,7 @@ namespace Thinktecture.IdentityServer
         {
             public const string Issue          = "Issue";
             public const string Administration = "Administration";
+            public const string RoleAdmin = "RoleAdmin";
         }
 
         public static class Resources
@@ -50,9 +51,11 @@ namespace Thinktecture.IdentityServer
             public const string InternalRolesPrefix          = "IdentityServer";
             public const string Users                        = "Users";
             public const string Administrators               = "Administrators";
+            public const string RoleAdmins                   = "RoleAdmins";
 
             public const string IdentityServerUsers          = InternalRolesPrefix + Users;
             public const string IdentityServerAdministrators = InternalRolesPrefix + Administrators;
+            public const string IdentityServerRoleAdmins     = InternalRolesPrefix + RoleAdmins;
         }
 
         public static class CacheKeys

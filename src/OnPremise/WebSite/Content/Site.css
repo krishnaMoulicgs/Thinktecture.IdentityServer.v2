@@ -50,6 +50,7 @@ fieldset .editor-field input[type=url] {
 .validation-summary-errors {
   font-weight: bold;
   color: #ff0000;
+  
 }
 .validation-summary-valid {
   display: none;
@@ -67,9 +68,9 @@ a.bodyLink {
   color: #7285a3;
 }
 .masterHeader {
-  background-color: #606060;
+  /*background-color: #606060;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 5px;*/
 }
 .masterHeaderText {
   padding-left: 15px;
@@ -114,7 +115,7 @@ ul.hrd li button {
   content: ':';
 }
 .editor.small label {
-  width: 130px;
+  width: 140px;
 }
 .editor.small.signin input[type=text],
 .editor.small.signin input[type=password] {
@@ -181,4 +182,106 @@ ul.hrd li button {
 }
 .scopes label {
   cursor: pointer;
+}
+
+/*-------CGS--------------*/
+.headerIdsrv {
+width:100%;
+height:160px;
+}
+
+.editor .small label {
+    
+}
+.editor.small.signin input[type=text],
+.editor.small.signin input[type=password] {
+    
+}
+.field-validation-valid {
+   
+}
+
+a {
+    color: blue;
+}
+
+
+
+.masterHeader {
+   width:100%;
+   height:139px;
+}
+.headerleft {
+    display:inline-block;
+    float:left;
+    width:50%;
+}
+.headerlogo1 {
+
+}
+.headerright {
+    text-align:right;
+    vertical-align:top;
+    width:50%;
+    display:inline-block;
+    float:right;
+}
+    .headerright img 
+    {
+        height:139px;
+    }
+
+.divContent {
+    width:100%;float:left;
+}
+    .divContent .left {
+        width:30%;
+        float:left;
+    }
+    .divContent .middle {
+        width: 40%;
+        float: left;
+    }
+    .divContent .right {
+        width:30%;
+        float:left;
+    }
+fieldset .divlogo {
+    text-align:center;
+}
+    fieldset .divlogo img {
+        height:60px;
+    }
+fieldset .divRemPwd label {
+    text-align:left;
+}
+
+.editor.small.signin td.buttons {
+    padding-top: 10px;
+}
+
+   .divResult {
+        color:#ff0000; 
+        width:100%;
+        font-size:15px;
+        text-align:center;
+    }
+.cssbutton {
+    color: #fff;
+background-color: #2a6496;
+text-align: left;
+text-decoration: none;
+padding: 5px 8px 5px 8px;
+border: 0px;
+height:27px;
+}
+    .cssbutton:hover {
+        color:#ffffff;
+        text-decoration:none;
+        cursor:pointer;
+    }
+.cssimg {
+    /*margin-top: -18px;
+    margin-left: 10px;*/
+    width: 22px;
 }

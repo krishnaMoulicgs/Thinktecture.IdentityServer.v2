@@ -1,0 +1,128 @@
+﻿@using Thinktecture.IdentityServer.Web.App_LocalResources.Account
+@model Thinktecture.IdentityServer.Web.ViewModels.SignInModel
+
+@{
+    ViewBag.Title = SignIn_cshtml.UsernamePasswordSignIn;
+    //if (Model.IsSigninRequest)
+    //{
+    ViewBag.HideMenu = true;
+    //}
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>@string.Format(SignIn_cshtml.UnauthorizedAuthenticatedUser, User.Identity.Name)</h2>
+   
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="divContent">
+    <div class="divContent left">&nbsp;</div>
+    <div class="divContent middle">
+         @Html.ValidationSummary(true, SignIn_cshtml.SignInWasUnsuccessful)
+    @*<fieldset class="editor small signin">
+        <legend>@SignIn_cshtml.Login</legend>
+        <div>
+           <img src="~/Content/images/OSCid.png" />
+        </div>
+        <div>
+            @Html.LabelFor(m => m.UserName)
+            @Html.TextBoxFor(m => m.UserName)<br />
+            @Html.ValidationMessageFor(m => m.UserName)
+              
+        </div>
+                
+        <div>
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password) <br />
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+                
+        <div>
+            @Html.LabelFor(m => m.EnableSSO)
+            @Html.CheckBoxFor(m => m.EnableSSO)            
+        </div>
+           <div>
+                @Html.ActionLink("Forgot Password", "ForgotPassword", "account", new { returnUrl = Model.ReturnUrl })<br />
+                @Html.ActionLink("Register", "Registration", "account", new { returnUrl = Model.ReturnUrl })
+           </div>     
+        <div class="buttons">
+            <input type="submit" value="@SignIn_cshtml.SignIn" />
+        </div>
+    </fieldset>
+<br />
+        <br />
+        <br />*@
+    <fieldset class="editor small signin">
+        <legend></legend>
+        <div class="divlogo">
+                    <img src="~/Content/images/OSCid.png" />
+                  </div>
+        <table>
+            <tr>
+               <td>@Html.LabelFor(m => m.UserName)</td>
+                <td>@Html.TextBoxFor(m => m.UserName)</td>
+            </tr>
+             <tr>
+                <td></td>
+                <td>  @Html.ValidationMessageFor(m => m.UserName)</td>
+            </tr>
+             <tr>
+               <td>@Html.LabelFor(m => m.Password)</td>
+                <td>@Html.PasswordFor(m => m.Password)</td>
+            </tr>
+           <tr>
+                <td></td>
+                <td>  @Html.ValidationMessageFor(m => m.Password)</td>
+            </tr>
+    <tr>
+    <td></td>
+    <td>
+        <div class="divRemPwd">       
+                @Html.LabelFor(m => m.EnableSSO)
+                @Html.CheckBoxFor(m => m.EnableSSO)
+            </div> 
+    </td>
+    
+</tr>
+    <tr>
+        <td></td>
+        <td>@Html.ActionLink("Forgot Password","ForgotPassword", new { returnUrl = Model.ReturnUrl })</td>
+    </tr> 
+           @*  <tr>
+        <td></td>
+        <td>@Html.ActionLink("Reset Password","ResetPassword", new { returnUrl = Model.ReturnUrl })</td>
+    </tr>    *@
+            <tr>
+                <td></td>
+                <td> @Html.ActionLink("Register","Registration", new { returnUrl = Model.ReturnUrl })</td>
+            </tr>
+        </table>       
+                
+        <div class="buttons">
+            <input type="submit" class="cssbutton" value="@SignIn_cshtml.SignIn" />
+        </div>
+    </fieldset>
+
+        </div>
+    <div class="divContent right">&nbsp;</div>
+    </div>
+}
+
+@*@if (Model.ShowClientCertificateLink)
+{ 
+    @Html.ActionLink(SignIn_cshtml.UseClientCertificate, "CertificateSignIn", new { returnUrl = Model.ReturnUrl }) 
+}*@
+
+@section scripts
+{
+<script type="text/javascript">
+    $(function () {
+        $("#UserName").focus();
+     
+    });
+</script>
+}

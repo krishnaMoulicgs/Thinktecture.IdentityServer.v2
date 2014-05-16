@@ -88,6 +88,7 @@ namespace Thinktecture.IdentityServer.Repositories
             totalCount = query.Count();
             return query.Skip(start).Take(count);
         }
+               
 
         public void SetPassword(string userName, string password)
         {

@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Thinktecture.IdentityServer
         [Import]
         public IConfigurationRepository ConfigurationRepository { get; set; }
 
+        [Import]
+        public IUserManagementRepository userManagementRepository { get; set; }
         public AuthorizationManager()
         {
             Container.Current.SatisfyImportsOnce(this);
@@ -30,9 +33,10 @@ namespace Thinktecture.IdentityServer
 
         public override bool CheckAccess(AuthorizationContext context)
         {
+
             var action = context.Action.First();
             var id = context.Principal.Identities.First();
-
+           
             // if application authorization request
             if (action.Type.Equals(ClaimsAuthorization.ActionType))
             {
@@ -56,6 +60,8 @@ namespace Thinktecture.IdentityServer
                     return AuthorizeTokenIssuance(resource, id);
                 case Constants.Actions.Administration:
                     return AuthorizeAdministration(resource, id);
+                case Constants.Actions.RoleAdmin:
+                    return AuthorizeRoleAdmin(resource, id);
             }
 
             return false;
@@ -95,5 +101,24 @@ namespace Thinktecture.IdentityServer
 
             return roleResult;
         }
+        protected virtual bool AuthorizeRoleAdmin(Collection<Claim> resource, ClaimsIdentity id)
+        {
+            var roleResult = false;
+            List<string> rolesList = userManagementRepository.GetRolesForUser(id.Name).ToList();
+            foreach (string role in rolesList)
+            {
+                if (role.ToString() == "RoleAdmin")
+                {
+                    roleResult = true;
+                }
+                else
+                {
+                    roleResult = false;
+                }
+            }
+
+            return roleResult;
+        }
+      
     }
 }
