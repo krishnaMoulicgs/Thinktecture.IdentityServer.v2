@@ -10,8 +10,6 @@ namespace Thinktecture.IdentityServer.Web.ViewModels
     
     public class UserApprovalModel
     {
-
-        
         #region property
          public class approveduser
          {

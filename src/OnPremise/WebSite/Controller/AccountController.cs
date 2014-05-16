@@ -30,9 +30,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 {
     public class AccountController : AccountControllerBase
     {
-       
-       // public bool bInsertSuccess = false;
-
+      
         public AccountController()
             : base()
         { }
@@ -125,12 +123,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             return View("ForgotPassword", vm);
         }
 
-        /// <summary>
-        /// shows the Reset Password screen
-        /// </summary>
-        /// <param name="returnUrl"></param>
-        /// <param name="mobile"></param>
-        /// <returns></returns>
+        // shows the Reset Password screen
         public ActionResult ResetPassword(string returnUrl, bool mobile = false)
         {
 
@@ -140,11 +133,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             };
             return View("ResetPassword", vm);
         }
-        /// <summary>
-       /// Handles Reset Password
-       /// </summary>
-       /// <param name="model"></param>
-       /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
@@ -158,11 +146,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
         }
 
         #region Mailing Service
-        /// <summary>
-        /// Admin sends email to the user that his roles have been modified 
-        /// </summary>
-        /// <param name="uName"></param>
-        /// <returns></returns>
         [HttpPost]
         public JsonResult NotificationEmail(string uName)
         {
@@ -194,12 +177,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
             return Json(EmailStatus, JsonRequestBehavior.AllowGet);
         }
-        /// <summary>
-        /// Sends email to the user who requested for new password
-        /// </summary>
-        /// <param name="uName"></param>
-        /// <param name="email"></param>
-        /// <returns></returns>
         [HttpPost]
         public JsonResult SendEmail(string uName, string email)
         {
@@ -266,7 +243,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
             return View("ForgotPassword", model);
         }
-       
         [HttpPost]
         public ActionResult Registration(Registration model)
         {
@@ -293,8 +269,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             ViewData["Result"] = string.Empty;
             MembershipUser adminuser = Membership.GetUser();
             MyCustomProfile adminprofile = MyCustomProfile.GetProfile(adminuser.UserName);            
-            MembershipUser user = Membership.GetUser(UserName);
-            //user.a
+            MembershipUser user = Membership.GetUser(UserName);           
             if (Status)
             {
                 user.IsApproved = Status;
@@ -334,14 +309,14 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                 return RedirectToAction("SignIn");
             }
         }
-              
 
-        /// <summary>
-        /// Handles Update button in forgot Password screen
-        /// </summary>
-        /// <param name="newPwd"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        public ActionResult EditUserRoles(string UseName)
+        {
+            return View();
+        }
+
+        // handles Update button in forgot Password screen
+
         [HttpPost]
         public JsonResult UpdatePassword(string newPwd, string userId)
         {
@@ -426,7 +401,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                 model.BindList[tcount].TextField = model.Users[tcount].UserName;
                 model.BindList[tcount].ValueField = model.Users[tcount].UserId;
             }
-            ViewData["Result"] = "Updated Roles Successfully";         
+            ViewData["Result"] = "Updated Roles Successfully";        
             return View(model);
         }
       
@@ -550,7 +525,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                                         objRole.Rolename = rowRole["RoleName"].ToString();
                                         objRole.RoleId = rowRole["RoleId"].ToString();
                                         selected.Add(objRole.RoleId);
-
                                         objuserRoles.Roles.Add(objRole);
                                     }
                                 }
@@ -564,8 +538,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
             using (SqlCeConnection c = new SqlCeConnection(ConfigurationManager.ConnectionStrings["ProviderDB"].ToString()))
             {
-             
-
                 using (SqlCeDataAdapter a = new SqlCeDataAdapter(
                     "SELECT Applications.ApplicationName From Applications  ORDER BY Applications.ApplicationName", c))
                 {
@@ -606,7 +578,8 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
                 model.BindList[tcount].TextField = model.Users[tcount].UserName;
                 model.BindList[tcount].ValueField = model.Users[tcount].UserId;
-            }           
+            }
+           
             return View("AssignUserRoles", model);
         }
 
@@ -616,22 +589,17 @@ namespace Thinktecture.IdentityServer.Web.Controllers
         {
              if (HttpContext.User.Identity.IsAuthenticated)
             {
-                Session["SelectedUser"] = string.Empty;
-                          
+                Session["SelectedUser"] = string.Empty;                          
                 MembershipUser currentuser = Membership.GetUser();
                 MyCustomProfile profile = MyCustomProfile.GetProfile(currentuser.UserName);
                 Session["Application"] = profile.Application;
-
                 AssignUserRolesModel aum = new AssignUserRolesModel();
                 aum = GetapprovedUsers(aum);
                 aum.Application = profile.Application;
                 int tcount;
-
-                aum.BindList = new List<BindViewModel>();
-                
+                aum.BindList = new List<BindViewModel>();                
                 aum.Time = DateTime.Now.ToString();
                 aum.UserRole = getCurrentUserRole();
-
                 for (tcount = 0; tcount < aum.Users.Count; tcount++)
                 {
                     aum.BindList.Add(new BindViewModel());
@@ -648,7 +616,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                      ShowClientCertificateLink = ConfigurationRepository.Global.EnableClientCertificateAuthentication
                  };
 
-                
+                 //if (mobile) vm.IsSigninRequest = true;
                  return RedirectToAction("SignIn");
              }
 
@@ -662,16 +630,13 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                 Session["SelectedUser"] = string.Empty;
                 AssignUserRolesModel aum = new AssignUserRolesModel();
                 aum = GetapprovedUsers(aum);
-
                 int tcount;
-
                 aum.BindList = new List<BindViewModel>();
                 MembershipUser currentuser = Membership.GetUser();
                 MyCustomProfile profile = MyCustomProfile.GetProfile(currentuser.UserName);
                 aum.Application = profile.Application;
                 aum.Time = DateTime.Now.ToString();
                 aum.UserRole = getCurrentUserRole();
-
                 for (tcount = 0; tcount < aum.Users.Count; tcount++)
                 {
                     aum.BindList.Add(new BindViewModel());
@@ -687,7 +652,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                     ReturnUrl = "",
                     ShowClientCertificateLink = ConfigurationRepository.Global.EnableClientCertificateAuthentication
                 };
-
                 //if (mobile) vm.IsSigninRequest = true;
                 return RedirectToAction("SignIn");
             }
@@ -754,7 +718,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             MembershipUser currentuser = Membership.GetUser();
             string adminEmail = currentuser.Email;
             MembershipUserCollection AllUser = Membership.GetAllUsers();
-
             ua.Users = new System.Collections.Generic.List<UserApprovalModel.approveduser>();
             UserApprovalModel.approveduser uas;
             foreach (MembershipUser mu in AllUser)
@@ -805,21 +768,16 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
             return ua;
         }
-
         public AssignUserRolesModel GetapprovedUsers(AssignUserRolesModel aum)
         {
-
             UserApprovalModel ua = new UserApprovalModel();
             MembershipUser currentuser = Membership.GetUser();
             MyCustomProfile adminprofile = MyCustomProfile.GetProfile(currentuser.UserName);
             string adminApplication = adminprofile.Application;
             adminApplication = adminApplication.ToLower();
-            MembershipUserCollection AllUser = Membership.GetAllUsers();
-            // AssignUserRolesModel aum = new AssignUserRolesModel();
+            MembershipUserCollection AllUser = Membership.GetAllUsers();           
             aum.Users = new System.Collections.Generic.List<AssignUserRolesModel.approveduser>();
-
             AssignUserRolesModel.approveduser au;
-
             foreach (MembershipUser mu in AllUser)
             {
                 if (mu.IsApproved && mu.UserName != currentuser.UserName)
@@ -829,7 +787,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                         au = new AssignUserRolesModel.approveduser();
                         au.UserName = mu.UserName;
                         au.UserId = mu.ProviderUserKey.ToString();
-
                         aum.Users.Add(au);
                     }
                     else
@@ -858,7 +815,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             }
             return aum;
         }
-
         public string getCurrentUserRole()
         {
             string Role = string.Empty;
@@ -866,7 +822,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                 Role = Convert.ToString(Roles.GetRolesForUser(HttpContext.User.Identity.Name).FirstOrDefault());
             return Role;
         }
-
         public void SaveRolestoUser(AssignUserRolesModel model)
         {
             try
@@ -887,7 +842,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             catch (Exception ex)
             { }
         }
-
         public void SaveRoles(List<string> roles)
         {
             try
@@ -926,7 +880,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             catch (Exception ex)
             { }
         }
-
         public DataTable GetRolesByApplication(string ApplicationName)
         {
             DataTable t = new DataTable();
@@ -941,7 +894,6 @@ namespace Thinktecture.IdentityServer.Web.Controllers
             }
             return t;
         }
-
         public DataTable GetRolesByUser()
         {
             DataTable t = new DataTable();

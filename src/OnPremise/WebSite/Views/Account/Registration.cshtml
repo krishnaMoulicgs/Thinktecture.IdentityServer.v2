@@ -3,9 +3,8 @@
 
 @{
     ViewBag.Title = Registration_cshtml.Registration;
-   
     ViewBag.HideMenu = true;
-    
+   
 }
 
 
@@ -87,9 +86,7 @@
                 </tr>  
                 <tr>
                     <td></td>
-                    <td class="buttons">
-                         @* <input type="button" class="cssbutton" value="@Registration_cshtml.Submit" onclick="register();" />&nbsp;&nbsp;&nbsp;
-                          <input type="submit" class="cssbutton" value="@Registration_cshtml.Clear" />&nbsp;&nbsp;&nbsp;*@
+                    <td class="buttons">                       
                         <div style="float:left">
                              <a id="linkSubmit" onclick="register();" class="cssbutton" >Submit</a>     
                              @Html.ActionLink("Clear", "Registration", "account", new{area=""}, new {@class="cssbutton"})
@@ -199,8 +196,7 @@
                     $("#Result").text("");
                     $("#Result").text(data);
                 },
-                error: function (msg, status) {
-                    // alert(msg.status);
+                error: function (msg, status) {                
                 }
             });
         }

@@ -23,9 +23,6 @@ namespace Thinktecture.IdentityServer.Web.ViewModels
         public List<approveduser> Users { get; set; }
         public List<userRoles> UserRolesTable { get; set; }
         public List<userRoles> RolesinUserTable { get; set; }
-
-        //public DataTable dtuserRoles { get; set; }
-
         public string ValueField { get; set; }
 
         public List<BindViewModel> BindList { get; set; }
@@ -42,8 +39,7 @@ namespace Thinktecture.IdentityServer.Web.ViewModels
         public class Role
         {
             public string Rolename { get; set; }
-            public string RoleId { get; set; }
-           // public string[] Selected { get; set; }
+            public string RoleId { get; set; }          
         }
 
         public string Application { get; set; }

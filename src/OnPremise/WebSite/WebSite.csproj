@@ -1315,6 +1315,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\UserApproval.cshtml" />
     <Content Include="Views\Account\AssignUserRoles.cshtml" />
+    <Content Include="Views\Account\EditUserRoles.cshtml" />
     <Content Include="Views\Account\RoleAdmin_AssignUserRoles.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />

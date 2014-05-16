@@ -12,6 +12,8 @@
 <br />
 
 <div style="width: 100%">
+
+
     <div>
         <div class="divLeft" style="min-height: 50px;">
 
@@ -21,8 +23,10 @@
                 User Role :  @Html.DisplayFor(m => m.UserRole)
                 <br />
                 Time      :  @Html.DisplayFor(m => m.Time)  </b>
+
+
         </div>
-        <div class="divRight">           
+        <div class="divRight">         
         </div>`
         <div style="clear:both;"></div>
     </div>
@@ -46,7 +50,7 @@
                   
                     <table id="tbl" cellpadding="2px" style="border-collapse: collapse; width: 500px">
                        <tr>
-                           <td>User : @Session["SelectedUserName"]</td>
+                           <td>UserName : @Session["SelectedUserName"]</td>
                            <td colspan="2">
 
                            </td>
@@ -145,7 +149,7 @@
     {
         float: left;
         width: 25%;
-        padding: 2px;      
+        padding: 2px;       
     }
 
     .divRight
@@ -162,21 +166,19 @@
         border: none;
         color: #BFDBFF;
         display: inline-block;
-        font-weight: bold;       
+        font-weight: bold;        
         min-width: 40px;       
         text-decoration: none;
         text-align: center;
         width: 110px;
         border-radius: 7px;
     }
-
 </style>
 
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('#btnRemove').click(function () {
-           
+        $('#btnRemove').click(function () {           
            $('#currentRoles option:selected').remove();
         });
 
@@ -197,7 +199,6 @@
     });
 
     $('#btnSaveRoles').click(function () {
-        $('#Result').text("");
         var optionVal = [];       
         $('#currentRoles option').each(function () {           
             optionVal.push($(this).val());           
@@ -214,7 +215,7 @@
                
          });
     });
-    function successResult() {
+    function successResult() {       
         $('#Result').text("Roles Updated Successfully");
     }
 

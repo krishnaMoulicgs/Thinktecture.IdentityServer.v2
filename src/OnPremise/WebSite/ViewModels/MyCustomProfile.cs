@@ -9,7 +9,6 @@ namespace Thinktecture.IdentityServer.Web.ViewModels
     [Serializable()]
     public class MyCustomProfile : ProfileBase
     {
-
         #region Properties
         public string FirstName
         {
